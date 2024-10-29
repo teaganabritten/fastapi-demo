@@ -11,6 +11,7 @@ app = FastAPI()
 @app.get("/")  # zone apex
 def zone_apex():
     return {"Hello": "Teagan"}
+    return {"Go": "Hoos"}
 
 @app.get("/add/{a}/{b}")
 def add(a: int, b: int):
@@ -23,3 +24,7 @@ def multiply(c: int,d: int):
 @app.get("/square/{e}")
 def square(e :float):
     return{"square": e ** 2}
+
+@app.get("/cube/{f}")
+def cube(f :int):
+    return{"cube": f ** 3}
