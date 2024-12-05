@@ -18,16 +18,16 @@ def add(a: int, b: int):
     return {"sum": a + b}
 
 @api.get("/multiply/{c}/{d}")
-def multiply(c: int,d: int):
-    return{"product": c * d}
+def multiply(c: int, d: int):
+    return {"product": c * d}
 
 @api.get("/square/{e}")
-def square(e :float):
-    return{"square": e ** 2}
+def square(e: float):
+    return {"square": e ** 2}
 
 @api.get("/cube/{f}")
-def cube(f :int):
-    return{"cube": f ** 3}
+def cube(f: int):
+    return {"cube": f ** 3}
 
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
@@ -59,12 +59,12 @@ async def get_genres():
         headers = [x[0] for x in cur.description]
         results = cur.fetchall()
         json_data = [dict(zip(headers, result)) for result in results]
-	cur.close()
-	db.close()
+        cur.close()
+        db.close()
         return JSONResponse(content=json_data)
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
-	cur.close()
+        cur.close()
         db.close()
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
@@ -79,11 +79,11 @@ async def get_songs():
         CONCAT('https://uup3cy-dp1-spotify/', s.file) AS file,
         CONCAT('https://uup3cy-dp1-spotify/', s.image) AS image,
         g.genre AS genre
-    FROM 
+    FROM
         songs s
-    JOIN 
+    JOIN
         genres g ON s.genre = g.genreid
-    ORDER BY 
+    ORDER BY
         s.title;
     """
     try:
@@ -91,12 +91,12 @@ async def get_songs():
         headers = [x[0] for x in cur.description]
         results = cur.fetchall()
         json_data = [dict(zip(headers, result)) for result in results]
-	cur.close()
+        cur.close()
         db.close()
         return JSONResponse(content=json_data)
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
-	cur.close()
+        cur.close()
         db.close()
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
