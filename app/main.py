@@ -76,8 +76,8 @@ async def get_songs():
         s.album,
         s.artist,
         s.year,
-        CONCAT('https://uup3cy-dp1-spotify/', s.file) AS file,
-        CONCAT('https://uup3cy-dp1-spotify/', s.image) AS image,
+        CONCAT(s.file) AS file,
+        CONCAT(s.image) AS image,
         g.genre AS genre
     FROM
         songs s
