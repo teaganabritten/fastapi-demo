@@ -62,9 +62,6 @@ async def get_genres():
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
         return JSONResponse(content={"error": str(e)}, status_code=500)
-    finally:
-        cur.close()
-        db.close()
 
 @api.get('/songs')
 async def get_songs():
@@ -93,6 +90,3 @@ async def get_songs():
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
         return JSONResponse(content={"error": str(e)}, status_code=500)
-    finally:
-        cur.close()
-        db.close()
