@@ -59,9 +59,13 @@ async def get_genres():
         headers = [x[0] for x in cur.description]
         results = cur.fetchall()
         json_data = [dict(zip(headers, result)) for result in results]
+	cur.close()
+	db.close()
         return JSONResponse(content=json_data)
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
+	cur.close()
+        db.close()
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
 @api.get('/songs')
@@ -87,8 +91,12 @@ async def get_songs():
         headers = [x[0] for x in cur.description]
         results = cur.fetchall()
         json_data = [dict(zip(headers, result)) for result in results]
+	cur.close()
+        db.close()
         return JSONResponse(content=json_data)
     except mysql.connector.Error as e:
         print("MySQL Error: ", str(e))
+	cur.close()
+        db.close()
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
