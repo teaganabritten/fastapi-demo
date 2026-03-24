@@ -1,0 +1,34 @@
+# ── 1. Workflow name ─────────────────────────────────────────────
+name: Build and Push Docker Image
+
+# ── 2. Trigger ───────────────────────────────────────────────────
+on:
+  push:
+    branches:
+      - main
+
+# ── 3. Jobs ──────────────────────────────────────────────────────
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 4. Checkout ──────────────────────────────────────────
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # ── 5. Log in to GHCR ────────────────────────────────────
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+
+      # ── 6. Build and push ────────────────────────────────────
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.actor }}/fastapi-demo:latest
